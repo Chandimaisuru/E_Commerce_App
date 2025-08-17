@@ -37,193 +37,212 @@ class _MovieDetailScreenState extends State<MovieDetailScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Consumer<MovieProvider>(
-        builder: (context, movieProvider, child) {
-          if (movieProvider.isLoading && movieProvider.selectedMovie == null) {
-            return const Scaffold(
-              body: Center(
-                child: CircularProgressIndicator(
-                  color: Colors.deepPurple,
+      body: Container(
+        decoration: const BoxDecoration(
+          gradient: LinearGradient(
+            begin: Alignment.topCenter,
+            end: Alignment.bottomCenter,
+            colors: [
+              Color(0xFF2C2C2C), // Dark grey
+              Color(0xFF1A1A1A), // Darker grey
+              Color(0xFF000000), // Black
+            ],
+          ),
+        ),
+        child: Consumer<MovieProvider>(
+          builder: (context, movieProvider, child) {
+            if (movieProvider.isLoading && movieProvider.selectedMovie == null) {
+              return const Scaffold(
+                backgroundColor: Colors.transparent,
+                body: Center(
+                  child: CircularProgressIndicator(
+                    color: Color(0xFFFFD700),
+                  ),
                 ),
-              ),
-            );
-          }
+              );
+            }
 
-          if (movieProvider.error != null) {
-            return Scaffold(
-              appBar: AppBar(
-                title: const Text('Movie Details'),
-                backgroundColor: Colors.deepPurple,
-                foregroundColor: Colors.white,
-              ),
-              body: Center(
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    const Icon(
-                      Icons.error_outline,
-                      size: 64,
-                      color: Colors.red,
+            if (movieProvider.error != null) {
+              return Scaffold(
+                backgroundColor: Colors.transparent,
+                appBar: AppBar(
+                  title: const Text(
+                    'Movie Details',
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontWeight: FontWeight.w600,
                     ),
-                    const SizedBox(height: 16),
-                    Text(
-                      'Error: ${movieProvider.error}',
-                      style: const TextStyle(
-                        color: Colors.red,
-                        fontSize: 16,
-                      ),
-                      textAlign: TextAlign.center,
-                    ),
-                    const SizedBox(height: 16),
-                    ElevatedButton(
-                      onPressed: () {
-                        movieProvider.clearError();
-                        movieProvider.loadMovieDetails(widget.movieId);
-                      },
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: Colors.deepPurple,
-                        foregroundColor: Colors.white,
-                      ),
-                      child: const Text('Retry'),
-                    ),
-                  ],
+                  ),
+                  backgroundColor: Colors.transparent,
+                  elevation: 0,
+                  iconTheme: const IconThemeData(color: Colors.white),
                 ),
-              ),
-            );
-          }
-
-          final movie = movieProvider.selectedMovie;
-          if (movie == null) {
-            return const Scaffold(
-              body: Center(
-                child: Text(
-                  'Movie not found',
-                  style: TextStyle(fontSize: 18),
-                ),
-              ),
-            );
-          }
-
-          return CustomScrollView(
-            slivers: [
-              // App Bar with Backdrop Image
-              SliverAppBar(
-                expandedHeight: 300,
-                pinned: true,
-                backgroundColor: Colors.deepPurple,
-                flexibleSpace: FlexibleSpaceBar(
-                  background: Stack(
-                    fit: StackFit.expand,
+                body: Center(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      CachedNetworkImage(
-                        imageUrl: movie.fullBackdropPath,
-                        fit: BoxFit.cover,
-                        placeholder: (context, url) => Container(
-                          color: Colors.grey[300],
-                          child: const Center(
-                            child: CircularProgressIndicator(
-                              color: Colors.deepPurple,
+                      const Icon(
+                        Icons.error_outline,
+                        size: 64,
+                        color: Colors.red,
+                      ),
+                      const SizedBox(height: 16),
+                      Text(
+                        'Error: ${movieProvider.error}',
+                        style: const TextStyle(
+                          color: Colors.white,
+                          fontSize: 16,
+                        ),
+                        textAlign: TextAlign.center,
+                      ),
+                      const SizedBox(height: 16),
+                      ElevatedButton(
+                        onPressed: () {
+                          movieProvider.clearError();
+                          movieProvider.loadMovieDetails(widget.movieId);
+                        },
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: const Color(0xFFFFD700),
+                          foregroundColor: Colors.black,
+                        ),
+                        child: const Text('Retry'),
+                      ),
+                    ],
+                  ),
+                ),
+              );
+            }
+
+            final movie = movieProvider.selectedMovie;
+            if (movie == null) {
+              return const Scaffold(
+                backgroundColor: Colors.transparent,
+                body: Center(
+                  child: Text(
+                    'Movie not found',
+                    style: TextStyle(
+                      fontSize: 18,
+                      color: Colors.white,
+                    ),
+                  ),
+                ),
+              );
+            }
+
+            return CustomScrollView(
+              slivers: [
+                // App Bar with Backdrop Image
+                SliverAppBar(
+                  expandedHeight: 300,
+                  pinned: true,
+                  backgroundColor: Colors.transparent,
+                  flexibleSpace: FlexibleSpaceBar(
+                    background: Stack(
+                      fit: StackFit.expand,
+                      children: [
+                        CachedNetworkImage(
+                          imageUrl: movie.fullBackdropPath,
+                          fit: BoxFit.cover,
+                          placeholder: (context, url) => Container(
+                            color: const Color(0xFF2C2C2C),
+                            child: const Center(
+                              child: CircularProgressIndicator(
+                                color: Color(0xFFFFD700),
+                              ),
+                            ),
+                          ),
+                          errorWidget: (context, url, error) => Container(
+                            color: const Color(0xFF2C2C2C),
+                            child: const Icon(
+                              Icons.error,
+                              size: 50,
+                              color: Colors.red,
                             ),
                           ),
                         ),
-                        errorWidget: (context, url, error) => Container(
-                          color: Colors.grey[300],
-                          child: const Icon(
-                            Icons.error,
-                            size: 50,
-                            color: Colors.red,
+                        // Darker gradient overlay for better text readability
+                        Container(
+                          decoration: BoxDecoration(
+                            gradient: LinearGradient(
+                              begin: Alignment.topCenter,
+                              end: Alignment.bottomCenter,
+                              colors: [
+                                Colors.transparent,
+                                Colors.black.withOpacity(0.3),
+                                Colors.black.withOpacity(0.8),
+                              ],
+                            ),
                           ),
                         ),
-                      ),
-                      // Gradient overlay
-                      Container(
-                        decoration: BoxDecoration(
-                          gradient: LinearGradient(
-                            begin: Alignment.topCenter,
-                            end: Alignment.bottomCenter,
-                            colors: [
-                              Colors.transparent,
-                              Colors.black.withOpacity(0.8),
-                            ],
-                          ),
+                      ],
+                    ),
+                  ),
+                  leading: IconButton(
+                    icon: const Icon(
+                      Icons.arrow_back,
+                      color: Colors.white,
+                      size: 28,
+                    ),
+                    onPressed: () => Navigator.pop(context),
+                  ),
+                ),
+                
+                // Movie Details Content
+                SliverToBoxAdapter(
+                  child: Padding(
+                    padding: const EdgeInsets.all(16.0),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        // Title and Year Section
+                        _buildTitleSection(movie),
+                        const SizedBox(height: 16),
+                        
+                        // Genre Chips Section
+                        _buildGenreSection(movie),
+                        const SizedBox(height: 24),
+                        
+                        // Poster and Basic Info Row
+                        _buildPosterAndInfoSection(movie, movieProvider),
+                        const SizedBox(height: 24),
+                        
+                        // Watch Trailer Button
+                        _buildTrailerSection(movie, movieProvider),
+                        const SizedBox(height: 24),
+                        
+                        // Overview Section
+                        _buildOverviewSection(movie),
+                        const SizedBox(height: 32),
+                        
+                        // Cast Section
+                        CastSection(
+                          cast: movieProvider.cast,
+                          isLoading: movieProvider.isLoadingCast,
                         ),
-                      ),
-                    ],
-                  ),
-                  // title: Text(
-                  //   movie.titleWithYear,
-                  //   style: const TextStyle(
-                  //     color: Colors.white,
-                  //     fontWeight: FontWeight.bold,
-                  //     fontSize: 18,
-                  //   ),
-                  // ),
-                ),
-                leading: IconButton(
-                  icon: const Icon(
-                    Icons.arrow_back,
-                    color: Colors.white,
-                    size: 28,
-                  ),
-                  onPressed: () => Navigator.pop(context),
-                ),
-              ),
-              
-              // Movie Details Content
-              SliverToBoxAdapter(
-                child: Padding(
-                  padding: const EdgeInsets.all(16.0),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      // Title and Year Section
-                      _buildTitleSection(movie),
-                      const SizedBox(height: 16),
-                      
-                      // Genre Chips Section
-                      _buildGenreSection(movie),
-                      const SizedBox(height: 24),
-                      
-                      // Poster and Basic Info Row
-                      _buildPosterAndInfoSection(movie, movieProvider),
-                      const SizedBox(height: 24),
-                      
-                      // Watch Trailer Button
-                      _buildTrailerSection(movie, movieProvider),
-                      const SizedBox(height: 24),
-                      
-                                             // Overview Section
-                       _buildOverviewSection(movie),
-                       const SizedBox(height: 32),
-                       
-                       // Cast Section
-                       CastSection(
-                         cast: movieProvider.cast,
-                         isLoading: movieProvider.isLoadingCast,
-                       ),
-                       const SizedBox(height: 32),
-                       
-                       // Reviews Section
-                       ReviewsSection(
-                         reviews: movieProvider.reviews,
-                         isLoading: movieProvider.isLoadingReviews,
-                       ),
-                       const SizedBox(height: 32),
-                       
-                       // Recommendations Section
-                       RecommendationsSection(
-                         recommendations: movieProvider.recommendations,
-                         isLoading: movieProvider.isLoadingRecommendations,
-                         onMovieTap: (movieId) => _navigateToMovieDetail(movieId),
-                       ),
-                       const SizedBox(height: 32),
-                    ],
+                        const SizedBox(height: 32),
+                        
+                        // Reviews Section
+                        ReviewsSection(
+                          reviews: movieProvider.reviews,
+                          isLoading: movieProvider.isLoadingReviews,
+                        ),
+                        const SizedBox(height: 32),
+                        
+                        // Recommendations Section
+                        RecommendationsSection(
+                          recommendations: movieProvider.recommendations,
+                          isLoading: movieProvider.isLoadingRecommendations,
+                          onMovieTap: (movieId) => _navigateToMovieDetail(movieId),
+                        ),
+                        const SizedBox(height: 32),
+                      ],
+                    ),
                   ),
                 ),
-              ),
-            ],
-          );
-        },
+              ],
+            );
+          },
+        ),
       ),
     );
   }
@@ -232,23 +251,21 @@ class _MovieDetailScreenState extends State<MovieDetailScreen> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        
-        // Text(
-        //   movie.title,
-        //   style: const TextStyle(
-        //     fontSize: 28,
-        //     fontWeight: FontWeight.bold,
-        //     color: Colors.black87,
-        //   ),
-        // ),
         if (movie.releaseYear.isNotEmpty) ...[
           const SizedBox(height: 4),
-          Text( movie.title +
-            '(${movie.releaseYear})',
+          Text(
+            '${movie.title} (${movie.releaseYear})',
             style: const TextStyle(
               fontSize: 32,
-              fontWeight: FontWeight.w500,
-              color: Colors.black87,
+              fontWeight: FontWeight.bold,
+              color: Color(0xFFFFD700), // Strong yellow
+              shadows: [
+                Shadow(
+                  offset: Offset(1, 1),
+                  blurRadius: 3,
+                  color: Colors.black54,
+                ),
+              ],
             ),
           ),
         ],
@@ -267,9 +284,9 @@ class _MovieDetailScreenState extends State<MovieDetailScreen> {
         const Text(
           'Genres',
           style: TextStyle(
-            fontSize: 16,
+            fontSize: 18,
             fontWeight: FontWeight.w600,
-            color: Colors.black54,
+            color: Colors.white,
           ),
         ),
         const SizedBox(height: 8),
@@ -281,10 +298,10 @@ class _MovieDetailScreenState extends State<MovieDetailScreen> {
             return Container(
               padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
               decoration: BoxDecoration(
-                color: Colors.deepPurple.withOpacity(0.1),
+                color: const Color(0xFFFFD700).withOpacity(0.2),
                 borderRadius: BorderRadius.circular(20),
                 border: Border.all(
-                  color: Colors.deepPurple.withOpacity(0.3),
+                  color: const Color(0xFFFFD700).withOpacity(0.5),
                   width: 1,
                 ),
               ),
@@ -293,7 +310,7 @@ class _MovieDetailScreenState extends State<MovieDetailScreen> {
                 style: const TextStyle(
                   fontSize: 12,
                   fontWeight: FontWeight.w500,
-                  color: Colors.deepPurple,
+                  color: Color(0xFFFFD700),
                 ),
               ),
             );
@@ -316,9 +333,9 @@ class _MovieDetailScreenState extends State<MovieDetailScreen> {
             decoration: BoxDecoration(
               boxShadow: [
                 BoxShadow(
-                  color: Colors.black.withOpacity(0.2),
-                  blurRadius: 8,
-                  offset: const Offset(0, 4),
+                  color: Colors.black.withOpacity(0.5),
+                  blurRadius: 12,
+                  offset: const Offset(0, 6),
                 ),
               ],
             ),
@@ -326,15 +343,15 @@ class _MovieDetailScreenState extends State<MovieDetailScreen> {
               imageUrl: movie.fullPosterPath,
               fit: BoxFit.cover,
               placeholder: (context, url) => Container(
-                color: Colors.grey[300],
+                color: const Color(0xFF2C2C2C),
                 child: const Center(
                   child: CircularProgressIndicator(
-                    color: Colors.deepPurple,
+                    color: Color(0xFFFFD700),
                   ),
                 ),
               ),
               errorWidget: (context, url, error) => Container(
-                color: Colors.grey[300],
+                color: const Color(0xFF2C2C2C),
                 child: const Icon(
                   Icons.error,
                   color: Colors.red,
@@ -356,10 +373,10 @@ class _MovieDetailScreenState extends State<MovieDetailScreen> {
                   Container(
                     padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
                     decoration: BoxDecoration(
-                      color: Colors.amber.withOpacity(0.1),
+                      color: const Color(0xFFFFD700).withOpacity(0.2),
                       borderRadius: BorderRadius.circular(8),
                       border: Border.all(
-                        color: Colors.amber.withOpacity(0.3),
+                        color: const Color(0xFFFFD700).withOpacity(0.5),
                         width: 1,
                       ),
                     ),
@@ -368,7 +385,7 @@ class _MovieDetailScreenState extends State<MovieDetailScreen> {
                       children: [
                         const Icon(
                           Icons.star,
-                          color: Colors.amber,
+                          color: Color(0xFFFFD700),
                           size: 16,
                         ),
                         const SizedBox(width: 4),
@@ -377,7 +394,7 @@ class _MovieDetailScreenState extends State<MovieDetailScreen> {
                           style: const TextStyle(
                             fontSize: 14,
                             fontWeight: FontWeight.w600,
-                            color: Colors.amber,
+                            color: Color(0xFFFFD700),
                           ),
                         ),
                       ],
@@ -432,14 +449,14 @@ class _MovieDetailScreenState extends State<MovieDetailScreen> {
         Icon(
           icon,
           size: 16,
-          color: Colors.grey[600],
+          color: Colors.grey[400],
         ),
         const SizedBox(width: 8),
         Text(
           '$label: ',
           style: TextStyle(
             fontSize: 14,
-            color: Colors.grey[600],
+            color: Colors.grey[400],
             fontWeight: FontWeight.w500,
           ),
         ),
@@ -447,7 +464,7 @@ class _MovieDetailScreenState extends State<MovieDetailScreen> {
           value,
           style: const TextStyle(
             fontSize: 14,
-            color: Colors.black87,
+            color: Colors.white,
             fontWeight: FontWeight.w600,
           ),
         ),
@@ -464,7 +481,7 @@ class _MovieDetailScreenState extends State<MovieDetailScreen> {
           style: TextStyle(
             fontSize: 20,
             fontWeight: FontWeight.bold,
-            color: Colors.black87,
+            color: Colors.white,
           ),
         ),
         const SizedBox(height: 12),
@@ -473,12 +490,12 @@ class _MovieDetailScreenState extends State<MovieDetailScreen> {
           height: 60,
           decoration: BoxDecoration(
             gradient: const LinearGradient(
-              colors: [Colors.red, Colors.redAccent],
+              colors: [Color(0xFFFFD700), Color(0xFFFFA500)],
             ),
             borderRadius: BorderRadius.circular(12),
             boxShadow: [
               BoxShadow(
-                color: Colors.red.withOpacity(0.3),
+                color: const Color(0xFFFFD700).withOpacity(0.3),
                 blurRadius: 8,
                 offset: const Offset(0, 4),
               ),
@@ -496,14 +513,14 @@ class _MovieDetailScreenState extends State<MovieDetailScreen> {
                   children: [
                     const Icon(
                       Icons.play_circle_filled,
-                      color: Colors.white,
+                      color: Colors.black,
                       size: 28,
                     ),
                     const SizedBox(width: 12),
                     Text(
                       movieProvider.isLoadingTrailer ? 'Loading...' : 'Watch Trailer',
                       style: const TextStyle(
-                        color: Colors.white,
+                        color: Colors.black,
                         fontSize: 16,
                         fontWeight: FontWeight.w600,
                       ),
@@ -514,7 +531,7 @@ class _MovieDetailScreenState extends State<MovieDetailScreen> {
                         width: 16,
                         height: 16,
                         child: CircularProgressIndicator(
-                          color: Colors.white,
+                          color: Colors.black,
                           strokeWidth: 2,
                         ),
                       ),
@@ -538,17 +555,17 @@ class _MovieDetailScreenState extends State<MovieDetailScreen> {
           style: TextStyle(
             fontSize: 20,
             fontWeight: FontWeight.bold,
-            color: Colors.black87,
+            color: Colors.white,
           ),
         ),
         const SizedBox(height: 12),
         Container(
           padding: const EdgeInsets.all(16),
           decoration: BoxDecoration(
-            color: Colors.grey[50],
+            color: const Color(0xFF2C2C2C),
             borderRadius: BorderRadius.circular(12),
             border: Border.all(
-              color: Colors.grey[200]!,
+              color: Colors.grey[800]!,
               width: 1,
             ),
           ),
@@ -556,10 +573,10 @@ class _MovieDetailScreenState extends State<MovieDetailScreen> {
             movie.overview.isNotEmpty 
                 ? movie.overview 
                 : 'No overview available for this movie.',
-            style: const TextStyle(
+            style: TextStyle(
               fontSize: 16,
               height: 1.6,
-              color: Colors.black87,
+              color: Colors.grey[300],
             ),
           ),
         ),

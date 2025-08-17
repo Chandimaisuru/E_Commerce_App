@@ -20,71 +20,99 @@ class MovieCard extends StatelessWidget {
         width: 160,
         margin: const EdgeInsets.only(right: 16),
         child: Card(
-          elevation: 8,
-          shadowColor: Colors.black26,
+          elevation: 12,
+          shadowColor: Colors.black.withOpacity(0.4),
+          color: const Color(0xFF2C2C2C),
           shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(12),
+            borderRadius: BorderRadius.circular(16),
           ),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              ClipRRect(
-                borderRadius: const BorderRadius.vertical(
-                  top: Radius.circular(12),
-                ),
-                child: AspectRatio(
-                  aspectRatio: 2 / 3,
+              // Poster section - takes most of the space
+              Expanded(
+                flex: 4,
+                child: ClipRRect(
+                  borderRadius: const BorderRadius.vertical(
+                    top: Radius.circular(16),
+                  ),
                   child: CachedNetworkImage(
                     imageUrl: movie.fullPosterPath,
                     fit: BoxFit.cover,
+                    width: double.infinity,
                     placeholder: (context, url) => Container(
-                      color: Colors.grey[300],
+                      color: const Color(0xFF2C2C2C),
                       child: const Center(
-                        child: CircularProgressIndicator(),
+                        child: CircularProgressIndicator(
+                          color: Color(0xFFFFD700),
+                        ),
                       ),
                     ),
                     errorWidget: (context, url, error) => Container(
-                      color: Colors.grey[300],
-                      child: const Icon(Icons.error),
+                      color: const Color(0xFF2C2C2C),
+                      child: const Icon(
+                        Icons.error,
+                        color: Colors.red,
+                      ),
                     ),
                   ),
                 ),
               ),
-              Padding(
-                padding: const EdgeInsets.all(12.0),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      movie.titleWithYear,
-                      style: const TextStyle(
-                        fontSize: 14,
-                        fontWeight: FontWeight.w600,
-                        height: 1.2,
+              // Content section - takes remaining space
+              Expanded(
+                flex: 1,
+                child: Padding(
+                  padding: const EdgeInsets.all(6.0),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      // Movie Title in Yellow
+                      Text(
+                        movie.title,
+                        style: const TextStyle(
+                          fontSize: 12,
+                          fontWeight: FontWeight.bold,
+                          height: 1.1,
+                          color: Color(0xFFFFD700),
+                        ),
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
                       ),
-                      maxLines: 2,
-                      overflow: TextOverflow.ellipsis,
-                    ),
-                    const SizedBox(height: 8),
-                    Row(
-                      children: [
-                        const Icon(
-                          Icons.star,
-                          size: 16,
-                          color: Colors.amber,
-                        ),
-                        const SizedBox(width: 4),
-                        Text(
-                          movie.voteAverage.toStringAsFixed(1),
-                          style: const TextStyle(
-                            fontSize: 12,
-                            color: Colors.grey,
-                            fontWeight: FontWeight.w500,
+                      // Year and Rating in one row
+                      Row(
+                        children: [
+                          if (movie.releaseYear.isNotEmpty) ...[
+                            Text(
+                              '(${movie.releaseYear})',
+                              style: TextStyle(
+                                fontSize: 10,
+                                color: Colors.grey[400],
+                                fontWeight: FontWeight.w500,
+                              ),
+                              maxLines: 1,
+                              overflow: TextOverflow.ellipsis,
+                            ),
+                            const Spacer(),
+                          ],
+                          const Icon(
+                            Icons.star,
+                            size: 12,
+                            color: Color(0xFFFFD700),
                           ),
-                        ),
-                      ],
-                    ),
-                  ],
+                          const SizedBox(width: 2),
+                          Text(
+                            movie.voteAverage.toStringAsFixed(1),
+                            style: TextStyle(
+                              fontSize: 10,
+                              color: Colors.grey[400],
+                              fontWeight: FontWeight.w500,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
                 ),
               ),
             ],

@@ -21,7 +21,7 @@ class ReviewsSection extends StatelessWidget {
             style: TextStyle(
               fontSize: 20,
               fontWeight: FontWeight.bold,
-              color: Colors.black87,
+              color: Colors.white,
             ),
           ),
           const SizedBox(height: 12),
@@ -34,10 +34,10 @@ class ReviewsSection extends StatelessWidget {
                 margin: const EdgeInsets.only(bottom: 16),
                 padding: const EdgeInsets.all(16),
                 decoration: BoxDecoration(
-                  color: Colors.grey[50],
+                  color: const Color(0xFF2C2C2C),
                   borderRadius: BorderRadius.circular(12),
                   border: Border.all(
-                    color: Colors.grey[200]!,
+                    color: Colors.grey[800]!,
                     width: 1,
                   ),
                 ),
@@ -50,12 +50,12 @@ class ReviewsSection extends StatelessWidget {
                           width: 40,
                           height: 40,
                           decoration: BoxDecoration(
-                            color: Colors.grey[300],
+                            color: const Color(0xFF2C2C2C),
                             borderRadius: BorderRadius.circular(20),
                           ),
                           child: const Center(
                             child: CircularProgressIndicator(
-                              color: Colors.deepPurple,
+                              color: Color(0xFFFFD700),
                               strokeWidth: 2,
                             ),
                           ),
@@ -69,7 +69,7 @@ class ReviewsSection extends StatelessWidget {
                                 height: 16,
                                 width: 120,
                                 decoration: BoxDecoration(
-                                  color: Colors.grey[300],
+                                  color: const Color(0xFF2C2C2C),
                                   borderRadius: BorderRadius.circular(8),
                                 ),
                               ),
@@ -78,7 +78,7 @@ class ReviewsSection extends StatelessWidget {
                                 height: 12,
                                 width: 80,
                                 decoration: BoxDecoration(
-                                  color: Colors.grey[300],
+                                  color: const Color(0xFF2C2C2C),
                                   borderRadius: BorderRadius.circular(6),
                                 ),
                               ),
@@ -91,7 +91,7 @@ class ReviewsSection extends StatelessWidget {
                     Container(
                       height: 12,
                       decoration: BoxDecoration(
-                        color: Colors.grey[300],
+                        color: const Color(0xFF2C2C2C),
                         borderRadius: BorderRadius.circular(6),
                       ),
                     ),
@@ -100,7 +100,7 @@ class ReviewsSection extends StatelessWidget {
                       height: 12,
                       width: double.infinity,
                       decoration: BoxDecoration(
-                        color: Colors.grey[300],
+                        color: const Color(0xFF2C2C2C),
                         borderRadius: BorderRadius.circular(6),
                       ),
                     ),
@@ -125,7 +125,7 @@ class ReviewsSection extends StatelessWidget {
           style: TextStyle(
             fontSize: 20,
             fontWeight: FontWeight.bold,
-            color: Colors.black87,
+            color: Colors.white,
           ),
         ),
         const SizedBox(height: 12),
@@ -144,10 +144,10 @@ class ReviewsSection extends StatelessWidget {
               margin: const EdgeInsets.only(bottom: 16),
               padding: const EdgeInsets.all(16),
               decoration: BoxDecoration(
-                color: Colors.grey[50],
+                color: const Color(0xFF2C2C2C),
                 borderRadius: BorderRadius.circular(12),
                 border: Border.all(
-                  color: Colors.grey[200]!,
+                  color: Colors.grey[800]!,
                   width: 1,
                 ),
               ),
@@ -162,12 +162,12 @@ class ReviewsSection extends StatelessWidget {
                         width: 40,
                         height: 40,
                         decoration: BoxDecoration(
-                          color: Colors.deepPurple.withOpacity(0.1),
+                          color: const Color(0xFFFFD700).withOpacity(0.2),
                           borderRadius: BorderRadius.circular(20),
                         ),
                         child: const Icon(
                           Icons.person,
-                          color: Colors.deepPurple,
+                          color: Color(0xFFFFD700),
                           size: 20,
                         ),
                       ),
@@ -183,7 +183,7 @@ class ReviewsSection extends StatelessWidget {
                               style: const TextStyle(
                                 fontSize: 14,
                                 fontWeight: FontWeight.w600,
-                                color: Colors.black87,
+                                color: Color(0xFF87CEEB), // Light blue
                               ),
                             ),
                             if (rating != null) ...[
@@ -193,14 +193,14 @@ class ReviewsSection extends StatelessWidget {
                                   const Icon(
                                     Icons.star,
                                     size: 14,
-                                    color: Colors.amber,
+                                    color: Color(0xFFFFD700),
                                   ),
                                   const SizedBox(width: 4),
                                   Text(
                                     rating.toString(),
                                     style: const TextStyle(
                                       fontSize: 12,
-                                      color: Colors.amber,
+                                      color: Color(0xFFFFD700),
                                       fontWeight: FontWeight.w500,
                                     ),
                                   ),
@@ -213,7 +213,7 @@ class ReviewsSection extends StatelessWidget {
                                 _formatDate(createdAt),
                                 style: TextStyle(
                                   fontSize: 11,
-                                  color: Colors.grey[600],
+                                  color: Colors.grey[400],
                                 ),
                               ),
                             ],
@@ -228,10 +228,10 @@ class ReviewsSection extends StatelessWidget {
                   // Review Content
                   Text(
                     content,
-                    style: const TextStyle(
+                    style: TextStyle(
                       fontSize: 14,
                       height: 1.5,
-                      color: Colors.black87,
+                      color: Colors.grey[300], // Light grey for readability
                     ),
                     maxLines: 4,
                     overflow: TextOverflow.ellipsis,
@@ -252,7 +252,7 @@ class ReviewsSection extends StatelessWidget {
                       child: const Text(
                         'Read More',
                         style: TextStyle(
-                          color: Colors.deepPurple,
+                          color: Color(0xFFFFD700),
                           fontWeight: FontWeight.w600,
                         ),
                       ),
@@ -286,6 +286,7 @@ class ReviewsSection extends StatelessWidget {
     showDialog(
       context: context,
       builder: (context) => Dialog(
+        backgroundColor: const Color(0xFF2C2C2C),
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(16),
         ),
@@ -302,12 +303,12 @@ class ReviewsSection extends StatelessWidget {
                     width: 40,
                     height: 40,
                     decoration: BoxDecoration(
-                      color: Colors.deepPurple.withOpacity(0.1),
+                      color: const Color(0xFFFFD700).withOpacity(0.2),
                       borderRadius: BorderRadius.circular(20),
                     ),
                     child: const Icon(
                       Icons.person,
-                      color: Colors.deepPurple,
+                      color: Color(0xFFFFD700),
                       size: 20,
                     ),
                   ),
@@ -321,7 +322,7 @@ class ReviewsSection extends StatelessWidget {
                           style: const TextStyle(
                             fontSize: 16,
                             fontWeight: FontWeight.w600,
-                            color: Colors.black87,
+                            color: Color(0xFF87CEEB), // Light blue
                           ),
                         ),
                         if (rating != null) ...[
@@ -331,14 +332,14 @@ class ReviewsSection extends StatelessWidget {
                               const Icon(
                                 Icons.star,
                                 size: 16,
-                                color: Colors.amber,
+                                color: Color(0xFFFFD700),
                               ),
                               const SizedBox(width: 4),
                               Text(
                                 rating.toString(),
                                 style: const TextStyle(
                                   fontSize: 14,
-                                  color: Colors.amber,
+                                  color: Color(0xFFFFD700),
                                   fontWeight: FontWeight.w500,
                                 ),
                               ),
@@ -350,7 +351,7 @@ class ReviewsSection extends StatelessWidget {
                   ),
                   IconButton(
                     onPressed: () => Navigator.of(context).pop(),
-                    icon: const Icon(Icons.close),
+                    icon: const Icon(Icons.close, color: Colors.white),
                   ),
                 ],
               ),
@@ -362,10 +363,10 @@ class ReviewsSection extends StatelessWidget {
                 child: SingleChildScrollView(
                   child: Text(
                     content,
-                    style: const TextStyle(
+                    style: TextStyle(
                       fontSize: 14,
                       height: 1.6,
-                      color: Colors.black87,
+                      color: Colors.grey[300], // Light grey for readability
                     ),
                   ),
                 ),
@@ -377,7 +378,7 @@ class ReviewsSection extends StatelessWidget {
                   'Reviewed on ${_formatDate(createdAt)}',
                   style: TextStyle(
                     fontSize: 12,
-                    color: Colors.grey[600],
+                    color: Colors.grey[400],
                     fontStyle: FontStyle.italic,
                   ),
                 ),

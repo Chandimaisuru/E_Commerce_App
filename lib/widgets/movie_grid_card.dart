@@ -17,68 +17,90 @@ class MovieGridCard extends StatelessWidget {
     return GestureDetector(
       onTap: onTap,
       child: Card(
-        elevation: 8,
-        shadowColor: Colors.black26,
+        elevation: 12,
+        shadowColor: Colors.black.withOpacity(0.4),
+        color: const Color(0xFF2C2C2C),
         shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(12),
+          borderRadius: BorderRadius.circular(16),
         ),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Expanded(
-              flex: 3,
+              flex: 4,
               child: ClipRRect(
                 borderRadius: const BorderRadius.vertical(
-                  top: Radius.circular(12),
+                  top: Radius.circular(16),
                 ),
                 child: CachedNetworkImage(
                   imageUrl: movie.fullPosterPath,
                   fit: BoxFit.cover,
                   width: double.infinity,
                   placeholder: (context, url) => Container(
-                    color: Colors.grey[300],
+                    color: const Color(0xFF2C2C2C),
                     child: const Center(
-                      child: CircularProgressIndicator(),
+                      child: CircularProgressIndicator(
+                        color: Color(0xFFFFD700),
+                      ),
                     ),
                   ),
                   errorWidget: (context, url, error) => Container(
-                    color: Colors.grey[300],
-                    child: const Icon(Icons.error),
+                    color: const Color(0xFF2C2C2C),
+                    child: const Icon(
+                      Icons.error,
+                      color: Colors.red,
+                    ),
                   ),
                 ),
               ),
             ),
             Expanded(
-              flex: 2,
+              flex: 1,
               child: Padding(
-                padding: const EdgeInsets.all(12.0),
+                padding: const EdgeInsets.all(6.0),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
+                    // Movie Title in Yellow
                     Text(
-                      movie.titleWithYear,
+                      movie.title,
                       style: const TextStyle(
-                        fontSize: 14,
-                        fontWeight: FontWeight.w600,
-                        height: 1.2,
+                        fontSize: 12,
+                        fontWeight: FontWeight.bold,
+                        height: 1.1,
+                        color: Color(0xFFFFD700),
                       ),
-                      maxLines: 2,
+                      maxLines: 1,
                       overflow: TextOverflow.ellipsis,
                     ),
-                    const SizedBox(height: 8),
+                    // Year and Rating in one row
                     Row(
                       children: [
+                        if (movie.releaseYear.isNotEmpty) ...[
+                          Text(
+                            '(${movie.releaseYear})',
+                            style: TextStyle(
+                              fontSize: 10,
+                              color: Colors.grey[400],
+                              fontWeight: FontWeight.w500,
+                            ),
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
+                          ),
+                          const Spacer(),
+                        ],
                         const Icon(
                           Icons.star,
-                          size: 16,
-                          color: Colors.amber,
+                          size: 12,
+                          color: Color(0xFFFFD700),
                         ),
-                        const SizedBox(width: 4),
+                        const SizedBox(width: 2),
                         Text(
                           movie.voteAverage.toStringAsFixed(1),
-                          style: const TextStyle(
-                            fontSize: 12,
-                            color: Colors.grey,
+                          style: TextStyle(
+                            fontSize: 10,
+                            color: Colors.grey[400],
                             fontWeight: FontWeight.w500,
                           ),
                         ),

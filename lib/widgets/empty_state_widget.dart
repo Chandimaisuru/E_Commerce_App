@@ -28,17 +28,19 @@ class EmptyStateWidget extends StatelessWidget {
             const SizedBox(height: 16),
             Text(
               hasActiveFilters ? 'No movies found' : 'No movies available',
-              style: Theme.of(context).textTheme.headlineSmall?.copyWith(
-                fontWeight: FontWeight.w600,
-                color: Colors.grey[600],
+              style: const TextStyle(
+                fontSize: 20,
+                fontWeight: FontWeight.bold,
+                color: Colors.white,
               ),
               textAlign: TextAlign.center,
             ),
             const SizedBox(height: 8),
             Text(
               customMessage ?? _getDefaultMessage(),
-              style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                color: Colors.grey[500],
+              style: TextStyle(
+                fontSize: 16,
+                color: Colors.grey[400],
               ),
               textAlign: TextAlign.center,
             ),
@@ -49,8 +51,8 @@ class EmptyStateWidget extends StatelessWidget {
                 icon: const Icon(Icons.clear),
                 label: const Text('Clear Filters'),
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.deepPurple,
-                  foregroundColor: Colors.white,
+                  backgroundColor: const Color(0xFFFFD700),
+                  foregroundColor: Colors.black,
                   padding: const EdgeInsets.symmetric(
                     horizontal: 24,
                     vertical: 12,

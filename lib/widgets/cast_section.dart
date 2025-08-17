@@ -22,7 +22,7 @@ class CastSection extends StatelessWidget {
             style: TextStyle(
               fontSize: 20,
               fontWeight: FontWeight.bold,
-              color: Colors.black87,
+              color: Colors.white,
             ),
           ),
           const SizedBox(height: 12),
@@ -41,12 +41,12 @@ class CastSection extends StatelessWidget {
                         width: 60,
                         height: 60,
                         decoration: BoxDecoration(
-                          color: Colors.grey[300],
+                          color: const Color(0xFF2C2C2C),
                           borderRadius: BorderRadius.circular(30),
                         ),
                         child: const Center(
                           child: CircularProgressIndicator(
-                            color: Colors.deepPurple,
+                            color: Color(0xFFFFD700),
                             strokeWidth: 2,
                           ),
                         ),
@@ -56,7 +56,7 @@ class CastSection extends StatelessWidget {
                         height: 12,
                         width: 60,
                         decoration: BoxDecoration(
-                          color: Colors.grey[300],
+                          color: const Color(0xFF2C2C2C),
                           borderRadius: BorderRadius.circular(6),
                         ),
                       ),
@@ -82,7 +82,7 @@ class CastSection extends StatelessWidget {
           style: TextStyle(
             fontSize: 20,
             fontWeight: FontWeight.bold,
-            color: Colors.black87,
+            color: Colors.white,
           ),
         ),
         const SizedBox(height: 12),
@@ -110,9 +110,9 @@ class CastSection extends StatelessWidget {
                         borderRadius: BorderRadius.circular(30),
                         boxShadow: [
                           BoxShadow(
-                            color: Colors.black.withOpacity(0.1),
-                            blurRadius: 4,
-                            offset: const Offset(0, 2),
+                            color: Colors.black.withOpacity(0.3),
+                            blurRadius: 6,
+                            offset: const Offset(0, 3),
                           ),
                         ],
                       ),
@@ -123,7 +123,7 @@ class CastSection extends StatelessWidget {
                                 imageUrl: 'https://image.tmdb.org/t/p/w185$profilePath',
                                 fit: BoxFit.cover,
                                 placeholder: (context, url) => Container(
-                                  color: Colors.grey[300],
+                                  color: const Color(0xFF2C2C2C),
                                   child: const Icon(
                                     Icons.person,
                                     color: Colors.grey,
@@ -131,7 +131,7 @@ class CastSection extends StatelessWidget {
                                   ),
                                 ),
                                 errorWidget: (context, url, error) => Container(
-                                  color: Colors.grey[300],
+                                  color: const Color(0xFF2C2C2C),
                                   child: const Icon(
                                     Icons.person,
                                     color: Colors.grey,
@@ -140,7 +140,7 @@ class CastSection extends StatelessWidget {
                                 ),
                               )
                             : Container(
-                                color: Colors.grey[300],
+                                color: const Color(0xFF2C2C2C),
                                 child: const Icon(
                                   Icons.person,
                                   color: Colors.grey,
@@ -157,7 +157,7 @@ class CastSection extends StatelessWidget {
                       style: const TextStyle(
                         fontSize: 12,
                         fontWeight: FontWeight.w600,
-                        color: Colors.black87,
+                        color: Colors.white,
                       ),
                       textAlign: TextAlign.center,
                       maxLines: 2,
@@ -171,7 +171,7 @@ class CastSection extends StatelessWidget {
                         character,
                         style: TextStyle(
                           fontSize: 10,
-                          color: Colors.grey[600],
+                          color: Colors.grey[400],
                         ),
                         textAlign: TextAlign.center,
                         maxLines: 1,

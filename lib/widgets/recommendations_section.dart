@@ -24,7 +24,7 @@ class RecommendationsSection extends StatelessWidget {
             style: TextStyle(
               fontSize: 20,
               fontWeight: FontWeight.bold,
-              color: Colors.black87,
+              color: Colors.white,
             ),
           ),
           const SizedBox(height: 12),
@@ -44,12 +44,12 @@ class RecommendationsSection extends StatelessWidget {
                         width: 120,
                         height: 120,
                         decoration: BoxDecoration(
-                          color: Colors.grey[300],
+                          color: const Color(0xFF2C2C2C),
                           borderRadius: BorderRadius.circular(8),
                         ),
                         child: const Center(
                           child: CircularProgressIndicator(
-                            color: Colors.deepPurple,
+                            color: Color(0xFFFFD700),
                             strokeWidth: 2,
                           ),
                         ),
@@ -59,7 +59,7 @@ class RecommendationsSection extends StatelessWidget {
                         height: 12,
                         width: 100,
                         decoration: BoxDecoration(
-                          color: Colors.grey[300],
+                          color: const Color(0xFF2C2C2C),
                           borderRadius: BorderRadius.circular(6),
                         ),
                       ),
@@ -68,7 +68,7 @@ class RecommendationsSection extends StatelessWidget {
                         height: 10,
                         width: 60,
                         decoration: BoxDecoration(
-                          color: Colors.grey[300],
+                          color: const Color(0xFF2C2C2C),
                           borderRadius: BorderRadius.circular(5),
                         ),
                       ),
@@ -94,7 +94,7 @@ class RecommendationsSection extends StatelessWidget {
           style: TextStyle(
             fontSize: 20,
             fontWeight: FontWeight.bold,
-            color: Colors.black87,
+            color: Colors.white,
           ),
         ),
         const SizedBox(height: 12),
@@ -131,9 +131,9 @@ class RecommendationsSection extends StatelessWidget {
                               borderRadius: BorderRadius.circular(8),
                               boxShadow: [
                                 BoxShadow(
-                                  color: Colors.black.withOpacity(0.1),
-                                  blurRadius: 4,
-                                  offset: const Offset(0, 2),
+                                  color: Colors.black.withOpacity(0.3),
+                                  blurRadius: 6,
+                                  offset: const Offset(0, 3),
                                 ),
                               ],
                             ),
@@ -144,16 +144,16 @@ class RecommendationsSection extends StatelessWidget {
                                       imageUrl: 'https://image.tmdb.org/t/p/w185$posterPath',
                                       fit: BoxFit.cover,
                                       placeholder: (context, url) => Container(
-                                        color: Colors.grey[300],
+                                        color: const Color(0xFF2C2C2C),
                                         child: const Center(
                                           child: CircularProgressIndicator(
-                                            color: Colors.deepPurple,
+                                            color: Color(0xFFFFD700),
                                             strokeWidth: 2,
                                           ),
                                         ),
                                       ),
                                       errorWidget: (context, url, error) => Container(
-                                        color: Colors.grey[300],
+                                        color: const Color(0xFF2C2C2C),
                                         child: const Icon(
                                           Icons.movie,
                                           color: Colors.grey,
@@ -162,7 +162,7 @@ class RecommendationsSection extends StatelessWidget {
                                       ),
                                     )
                                   : Container(
-                                      color: Colors.grey[300],
+                                      color: const Color(0xFF2C2C2C),
                                       child: const Icon(
                                         Icons.movie,
                                         color: Colors.grey,
@@ -182,6 +182,13 @@ class RecommendationsSection extends StatelessWidget {
                             decoration: BoxDecoration(
                               color: _getMatchColor(matchPercentage),
                               borderRadius: BorderRadius.circular(10),
+                              boxShadow: [
+                                BoxShadow(
+                                  color: Colors.black.withOpacity(0.3),
+                                  blurRadius: 4,
+                                  offset: const Offset(0, 2),
+                                ),
+                              ],
                             ),
                             child: Text(
                               '${matchPercentage}%',
@@ -204,7 +211,7 @@ class RecommendationsSection extends StatelessWidget {
                       style: const TextStyle(
                         fontSize: 12,
                         fontWeight: FontWeight.w600,
-                        color: Colors.black87,
+                        color: Colors.white,
                       ),
                       maxLines: 2,
                       overflow: TextOverflow.ellipsis,
@@ -218,14 +225,14 @@ class RecommendationsSection extends StatelessWidget {
                         const Icon(
                           Icons.star,
                           size: 12,
-                          color: Colors.amber,
+                          color: Color(0xFFFFD700),
                         ),
                         const SizedBox(width: 4),
                         Text(
                           voteAverage.toStringAsFixed(1),
-                          style: const TextStyle(
+                          style: TextStyle(
                             fontSize: 11,
-                            color: Colors.grey,
+                            color: Colors.grey[400],
                             fontWeight: FontWeight.w500,
                           ),
                         ),
@@ -257,10 +264,8 @@ class RecommendationsSection extends StatelessWidget {
   }
 
   Color _getMatchColor(int percentage) {
-    if (percentage >= 90) return Colors.green;
-    if (percentage >= 80) return Colors.lightGreen;
-    if (percentage >= 70) return Colors.orange;
-    if (percentage >= 60) return Colors.deepOrange;
-    return Colors.red;
+    if (percentage >= 70) return Colors.green; // Green for 70% and above
+    if (percentage >= 40) return Colors.orange; // Orange for 40-69%
+    return Colors.red; // Red for below 40%
   }
 }

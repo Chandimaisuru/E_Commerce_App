@@ -20,25 +20,27 @@ class CustomErrorWidget extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Icon(
+            const Icon(
               Icons.error_outline,
               size: 64,
-              color: Colors.red[400],
+              color: Colors.red,
             ),
             const SizedBox(height: 16),
-            Text(
+            const Text(
               'Oops! Something went wrong',
-              style: Theme.of(context).textTheme.headlineSmall?.copyWith(
+              style: TextStyle(
+                fontSize: 20,
                 fontWeight: FontWeight.bold,
-                color: Colors.red[700],
+                color: Colors.white,
               ),
               textAlign: TextAlign.center,
             ),
             const SizedBox(height: 8),
             Text(
               error,
-              style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                color: Colors.grey[600],
+              style: TextStyle(
+                fontSize: 16,
+                color: Colors.grey[400],
               ),
               textAlign: TextAlign.center,
             ),
@@ -49,8 +51,8 @@ class CustomErrorWidget extends StatelessWidget {
                 icon: const Icon(Icons.refresh),
                 label: Text(retryText ?? 'Try Again'),
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.red[600],
-                  foregroundColor: Colors.white,
+                  backgroundColor: const Color(0xFFFFD700),
+                  foregroundColor: Colors.black,
                   padding: const EdgeInsets.symmetric(
                     horizontal: 24,
                     vertical: 12,

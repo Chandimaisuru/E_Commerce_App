@@ -17,7 +17,7 @@ class TrailerPlayer extends StatefulWidget {
 }
 
 class _TrailerPlayerState extends State<TrailerPlayer> {
-  late VideoPlayerController _videoPlayerController;
+  VideoPlayerController? _videoPlayerController;
   ChewieController? _chewieController;
   bool _isLoading = true;
   String? _error;
@@ -48,7 +48,7 @@ class _TrailerPlayerState extends State<TrailerPlayer> {
 
   @override
   void dispose() {
-    _videoPlayerController.dispose();
+    _videoPlayerController?.dispose();
     _chewieController?.dispose();
     super.dispose();
   }
@@ -61,7 +61,7 @@ class _TrailerPlayerState extends State<TrailerPlayer> {
         width: double.infinity,
         height: MediaQuery.of(context).size.height * 0.7,
         decoration: BoxDecoration(
-          color: Colors.black,
+          color: const Color(0xFF2C2C2C),
           borderRadius: BorderRadius.circular(12),
         ),
         child: Column(
@@ -106,7 +106,7 @@ class _TrailerPlayerState extends State<TrailerPlayer> {
     if (_isLoading) {
       return const Center(
         child: CircularProgressIndicator(
-          color: Colors.white,
+          color: Color(0xFFFFD700),
         ),
       );
     }
@@ -118,13 +118,13 @@ class _TrailerPlayerState extends State<TrailerPlayer> {
           children: [
             const Icon(
               Icons.error_outline,
-              color: Colors.white,
+              color: Colors.red,
               size: 48,
             ),
             const SizedBox(height: 16),
-            Text(
+            const Text(
               'Error loading trailer',
-              style: const TextStyle(
+              style: TextStyle(
                 color: Colors.white,
                 fontSize: 16,
               ),
@@ -132,8 +132,8 @@ class _TrailerPlayerState extends State<TrailerPlayer> {
             const SizedBox(height: 8),
             Text(
               _error!,
-              style: const TextStyle(
-                color: Colors.grey,
+              style: TextStyle(
+                color: Colors.grey[400],
                 fontSize: 14,
               ),
               textAlign: TextAlign.center,
@@ -150,7 +150,7 @@ class _TrailerPlayerState extends State<TrailerPlayer> {
         children: [
           const Icon(
             Icons.play_circle_outline,
-            color: Colors.white,
+            color: Color(0xFFFFD700),
             size: 64,
           ),
           const SizedBox(height: 16),
@@ -163,10 +163,10 @@ class _TrailerPlayerState extends State<TrailerPlayer> {
             ),
           ),
           const SizedBox(height: 8),
-          const Text(
+          Text(
             'Click below to watch on YouTube',
             style: TextStyle(
-              color: Colors.grey,
+              color: Colors.grey[400],
               fontSize: 14,
             ),
           ),
@@ -179,14 +179,16 @@ class _TrailerPlayerState extends State<TrailerPlayer> {
                 SnackBar(
                   content: Text('Opening YouTube trailer: ${widget.videoKey}'),
                   duration: const Duration(seconds: 2),
+                  backgroundColor: const Color(0xFFFFD700),
+                  behavior: SnackBarBehavior.floating,
                 ),
               );
             },
             icon: const Icon(Icons.play_arrow),
             label: const Text('Watch on YouTube'),
             style: ElevatedButton.styleFrom(
-              backgroundColor: Colors.red,
-              foregroundColor: Colors.white,
+              backgroundColor: const Color(0xFFFFD700),
+              foregroundColor: Colors.black,
               padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
             ),
           ),
