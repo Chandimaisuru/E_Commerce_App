@@ -36,6 +36,18 @@ class MovieProvider extends ChangeNotifier {
   String? _trailerKey;
   bool _isLoadingTrailer = false;
   
+  // Cast state
+  List<Map<String, dynamic>> _cast = [];
+  bool _isLoadingCast = false;
+  
+  // Reviews state
+  List<Map<String, dynamic>> _reviews = [];
+  bool _isLoadingReviews = false;
+  
+  // Recommendations state
+  List<Map<String, dynamic>> _recommendations = [];
+  bool _isLoadingRecommendations = false;
+  
   // Available years for filtering (from 2024 to 1950)
   static const List<String> availableYears = [
     '2024', '2023', '2022', '2021', '2020', '2019', '2018', '2017', '2016', '2015',
@@ -61,6 +73,12 @@ class MovieProvider extends ChangeNotifier {
   String get searchQuery => _searchQuery;
   String? get trailerKey => _trailerKey;
   bool get isLoadingTrailer => _isLoadingTrailer;
+  List<Map<String, dynamic>> get cast => _cast;
+  bool get isLoadingCast => _isLoadingCast;
+  List<Map<String, dynamic>> get reviews => _reviews;
+  bool get isLoadingReviews => _isLoadingReviews;
+  List<Map<String, dynamic>> get recommendations => _recommendations;
+  bool get isLoadingRecommendations => _isLoadingRecommendations;
   int get currentPage => _currentPage;
   int get totalPages => _totalPages;
   int get totalResults => _totalResults;
@@ -269,6 +287,54 @@ class MovieProvider extends ChangeNotifier {
       _error = e.toString();
     } finally {
       _isLoadingTrailer = false;
+      notifyListeners();
+    }
+  }
+
+  // Load movie cast
+  Future<void> loadMovieCast(int movieId) async {
+    _isLoadingCast = true;
+    notifyListeners();
+    
+    try {
+      _cast = await _movieService.getMovieCast(movieId);
+      _error = null;
+    } catch (e) {
+      _error = e.toString();
+    } finally {
+      _isLoadingCast = false;
+      notifyListeners();
+    }
+  }
+
+  // Load movie reviews
+  Future<void> loadMovieReviews(int movieId) async {
+    _isLoadingReviews = true;
+    notifyListeners();
+    
+    try {
+      _reviews = await _movieService.getMovieReviews(movieId);
+      _error = null;
+    } catch (e) {
+      _error = e.toString();
+    } finally {
+      _isLoadingReviews = false;
+      notifyListeners();
+    }
+  }
+
+  // Load movie recommendations
+  Future<void> loadMovieRecommendations(int movieId) async {
+    _isLoadingRecommendations = true;
+    notifyListeners();
+    
+    try {
+      _recommendations = await _movieService.getMovieRecommendations(movieId);
+      _error = null;
+    } catch (e) {
+      _error = e.toString();
+    } finally {
+      _isLoadingRecommendations = false;
       notifyListeners();
     }
   }

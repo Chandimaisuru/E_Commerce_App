@@ -180,4 +180,61 @@ class MovieService {
       return null;
     }
   }
+
+  // Get movie cast
+  Future<List<Map<String, dynamic>>> getMovieCast(int movieId) async {
+    try {
+      final response = await http.get(
+        Uri.parse('$baseUrl/movie/$movieId/credits?api_key=$apiKey&language=en-US'),
+      );
+
+      if (response.statusCode == 200) {
+        final data = json.decode(response.body);
+        final cast = data['cast'] as List;
+        return cast.cast<Map<String, dynamic>>();
+      } else {
+        throw Exception('Failed to load movie cast');
+      }
+    } catch (e) {
+      throw Exception('Error: $e');
+    }
+  }
+
+  // Get movie reviews
+  Future<List<Map<String, dynamic>>> getMovieReviews(int movieId) async {
+    try {
+      final response = await http.get(
+        Uri.parse('$baseUrl/movie/$movieId/reviews?api_key=$apiKey&language=en-US'),
+      );
+
+      if (response.statusCode == 200) {
+        final data = json.decode(response.body);
+        final results = data['results'] as List;
+        return results.cast<Map<String, dynamic>>();
+      } else {
+        throw Exception('Failed to load movie reviews');
+      }
+    } catch (e) {
+      throw Exception('Error: $e');
+    }
+  }
+
+  // Get movie recommendations
+  Future<List<Map<String, dynamic>>> getMovieRecommendations(int movieId) async {
+    try {
+      final response = await http.get(
+        Uri.parse('$baseUrl/movie/$movieId/recommendations?api_key=$apiKey&language=en-US'),
+      );
+
+      if (response.statusCode == 200) {
+        final data = json.decode(response.body);
+        final results = data['results'] as List;
+        return results.cast<Map<String, dynamic>>();
+      } else {
+        throw Exception('Failed to load movie recommendations');
+      }
+    } catch (e) {
+      throw Exception('Error: $e');
+    }
+  }
 }

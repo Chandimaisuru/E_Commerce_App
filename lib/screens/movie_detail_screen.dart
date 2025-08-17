@@ -5,6 +5,9 @@ import '../services/movie_provider.dart';
 import '../models/genre.dart';
 import '../models/movie.dart';
 import '../widgets/trailer_player.dart';
+import '../widgets/cast_section.dart';
+import '../widgets/reviews_section.dart';
+import '../widgets/recommendations_section.dart';
 
 class MovieDetailScreen extends StatefulWidget {
   final int movieId;
@@ -25,6 +28,9 @@ class _MovieDetailScreenState extends State<MovieDetailScreen> {
     WidgetsBinding.instance.addPostFrameCallback((_) {
       final movieProvider = Provider.of<MovieProvider>(context, listen: false);
       movieProvider.loadMovieDetails(widget.movieId);
+      movieProvider.loadMovieCast(widget.movieId);
+      movieProvider.loadMovieReviews(widget.movieId);
+      movieProvider.loadMovieRecommendations(widget.movieId);
     });
   }
 
@@ -186,9 +192,31 @@ class _MovieDetailScreenState extends State<MovieDetailScreen> {
                       _buildTrailerSection(movie, movieProvider),
                       const SizedBox(height: 24),
                       
-                      // Overview Section
-                      _buildOverviewSection(movie),
-                      const SizedBox(height: 32),
+                                             // Overview Section
+                       _buildOverviewSection(movie),
+                       const SizedBox(height: 32),
+                       
+                       // Cast Section
+                       CastSection(
+                         cast: movieProvider.cast,
+                         isLoading: movieProvider.isLoadingCast,
+                       ),
+                       const SizedBox(height: 32),
+                       
+                       // Reviews Section
+                       ReviewsSection(
+                         reviews: movieProvider.reviews,
+                         isLoading: movieProvider.isLoadingReviews,
+                       ),
+                       const SizedBox(height: 32),
+                       
+                       // Recommendations Section
+                       RecommendationsSection(
+                         recommendations: movieProvider.recommendations,
+                         isLoading: movieProvider.isLoadingRecommendations,
+                         onMovieTap: (movieId) => _navigateToMovieDetail(movieId),
+                       ),
+                       const SizedBox(height: 32),
                     ],
                   ),
                 ),
@@ -575,5 +603,14 @@ class _MovieDetailScreenState extends State<MovieDetailScreen> {
     } catch (e) {
       return dateString;
     }
+  }
+
+  void _navigateToMovieDetail(int movieId) {
+    Navigator.pushReplacement(
+      context,
+      MaterialPageRoute(
+        builder: (context) => MovieDetailScreen(movieId: movieId),
+      ),
+    );
   }
 }
