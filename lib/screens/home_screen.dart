@@ -61,7 +61,7 @@ class _HomeScreenState extends State<HomeScreen> {
             child: Column(
               children: [
                 // App Bar
-                _buildAppBar(),
+                // _buildAppBar(),
                 
                 // Main Content
                 Expanded(
@@ -103,13 +103,14 @@ class _HomeScreenState extends State<HomeScreen> {
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
+                                const SizedBox(height: 26),
                                 // Search Bar Section
                                 _buildSearchBar(movieProvider),
-                                const SizedBox(height: 24),
+                                const SizedBox(height: 30),
                                 
                                 // Top Rated Movies Section
                                 _buildTopRatedSection(movieProvider),
-                                const SizedBox(height: 10),
+                                const SizedBox(height:28 ),
                                 
                                 // Genre Categories Section
                                 _buildGenreCategoriesSection(movieProvider),
@@ -117,7 +118,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                 
                                 // Year Filter Section
                                 _buildYearFilterSection(movieProvider),
-                                const SizedBox(height: 24),
+                                const SizedBox(height: 10),
                                 
                                 // Movies by Selected Genre (with search results)
                                 _buildMoviesByGenreSection(movieProvider),
@@ -675,12 +676,15 @@ class _HomeScreenState extends State<HomeScreen> {
           child: Row(
             children: [
               Expanded(
-                child: Text(
-                  sectionTitle,
-                  style: const TextStyle(
-                    fontSize: 20,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.white,
+                child: Padding(
+                  padding: const EdgeInsets.only(top: 10),
+                  child: Text(
+                    sectionTitle,
+                    style: const TextStyle(
+                      fontSize: 20,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.white,
+                    ),
                   ),
                 ),
               ),
