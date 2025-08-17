@@ -32,6 +32,10 @@ class MovieProvider extends ChangeNotifier {
   // Selected movie
   Movie? _selectedMovie;
   
+  // Trailer state
+  String? _trailerKey;
+  bool _isLoadingTrailer = false;
+  
   // Available years for filtering (from 2024 to 1950)
   static const List<String> availableYears = [
     '2024', '2023', '2022', '2021', '2020', '2019', '2018', '2017', '2016', '2015',
@@ -55,6 +59,8 @@ class MovieProvider extends ChangeNotifier {
   int? get selectedGenreId => _selectedGenreId;
   String? get selectedYear => _selectedYear;
   String get searchQuery => _searchQuery;
+  String? get trailerKey => _trailerKey;
+  bool get isLoadingTrailer => _isLoadingTrailer;
   int get currentPage => _currentPage;
   int get totalPages => _totalPages;
   int get totalResults => _totalResults;
@@ -247,6 +253,22 @@ class MovieProvider extends ChangeNotifier {
       _error = e.toString();
     } finally {
       _isLoading = false;
+      notifyListeners();
+    }
+  }
+
+  // Load movie trailer
+  Future<void> loadMovieTrailer(int movieId) async {
+    _isLoadingTrailer = true;
+    notifyListeners();
+    
+    try {
+      _trailerKey = await _movieService.getOfficialTrailer(movieId);
+      _error = null;
+    } catch (e) {
+      _error = e.toString();
+    } finally {
+      _isLoadingTrailer = false;
       notifyListeners();
     }
   }

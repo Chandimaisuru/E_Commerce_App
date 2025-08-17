@@ -104,7 +104,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     
                     // Top Rated Movies Section
                     _buildTopRatedSection(movieProvider),
-                    const SizedBox(height: 32),
+                    const SizedBox(height: 10),
                     
                     // Genre Categories Section
                     _buildGenreCategoriesSection(movieProvider),

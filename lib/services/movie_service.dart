@@ -135,4 +135,49 @@ class MovieService {
       throw Exception('Error: $e');
     }
   }
+
+  // Get movie videos (trailers, teasers, etc.)
+  Future<List<Map<String, dynamic>>> getMovieVideos(int movieId) async {
+    try {
+      final response = await http.get(
+        Uri.parse('$baseUrl/movie/$movieId/videos?api_key=$apiKey&language=en-US'),
+      );
+
+      if (response.statusCode == 200) {
+        final data = json.decode(response.body);
+        final results = data['results'] as List;
+        return results.cast<Map<String, dynamic>>();
+      } else {
+        throw Exception('Failed to load movie videos');
+      }
+    } catch (e) {
+      throw Exception('Error: $e');
+    }
+  }
+
+  // Get official trailer for a movie
+  Future<String?> getOfficialTrailer(int movieId) async {
+    try {
+      final videos = await getMovieVideos(movieId);
+      
+      // Look for official trailer first, then any trailer
+      final officialTrailer = videos.firstWhere(
+        (video) => video['type'] == 'Trailer' && 
+                   video['official'] == true &&
+                   video['site'] == 'YouTube',
+        orElse: () => videos.firstWhere(
+          (video) => video['type'] == 'Trailer' && video['site'] == 'YouTube',
+          orElse: () => <String, dynamic>{},
+        ),
+      );
+      
+      if (officialTrailer.isNotEmpty && officialTrailer['key'] != null) {
+        return officialTrailer['key'] as String;
+      }
+      
+      return null;
+    } catch (e) {
+      return null;
+    }
+  }
 }
