@@ -144,10 +144,17 @@ class MovieProvider extends ChangeNotifier {
     if (_selectedGenreId == genreId) return;
     
     _selectedGenreId = genreId;
+    
+    // If "All Films" is selected (genreId is null), clear year filter to show all movies
+    if (genreId == null) {
+      _selectedYear = null;
+    }
+    
     _isLoading = true;
     notifyListeners();
     
     try {
+      // Load movies with both genre and year filters (AND condition)
       await loadMovies(refresh: true);
       _error = null;
     } catch (e) {
@@ -163,10 +170,17 @@ class MovieProvider extends ChangeNotifier {
     if (_selectedYear == year) return;
     
     _selectedYear = year;
+    
+    // If "All Years" is selected (year is null), clear genre filter to show all movies
+    if (year == null) {
+      _selectedGenreId = null;
+    }
+    
     _isLoading = true;
     notifyListeners();
     
     try {
+      // Load movies with both genre and year filters (AND condition)
       await loadMovies(refresh: true);
       _error = null;
     } catch (e) {
@@ -260,6 +274,21 @@ class MovieProvider extends ChangeNotifier {
   void clearError() {
     _error = null;
     notifyListeners();
+  }
+
+  // Get search suggestions
+  Future<List<Movie>> getSearchSuggestions(String query) async {
+    if (query.length < 2) return [];
+    
+    try {
+      final result = await _movieService.getMovies(
+        searchQuery: query,
+        page: 1,
+      );
+      return (result['movies'] as List<Movie>).take(5).toList();
+    } catch (e) {
+      return [];
+    }
   }
 
   // Check if any filters are active
