@@ -43,93 +43,95 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Container(
-        decoration: const BoxDecoration(
-          gradient: LinearGradient(
-            begin: Alignment.topCenter,
-            end: Alignment.bottomCenter,
-            colors: [
-              Color(0xFF2C2C2C), // Dark grey
-              Color(0xFF1A1A1A), // Darker grey
-              Color(0xFF000000), // Black
-            ],
+    return SafeArea(
+      child: Scaffold(
+        body: Container(
+          decoration: const BoxDecoration(
+            gradient: LinearGradient(
+              begin: Alignment.topCenter,
+              end: Alignment.bottomCenter,
+              colors: [
+                Color(0xFF2C2C2C), // Dark grey
+                Color(0xFF1A1A1A), // Darker grey
+                Color(0xFF000000), // Black
+              ],
+            ),
           ),
-        ),
-        child: SafeArea(
-          child: Column(
-            children: [
-              // App Bar
-              _buildAppBar(),
-              
-              // Main Content
-              Expanded(
-                child: GestureDetector(
-                  onTap: () {
-                    // Hide suggestions when tapping outside
-                    if (_showSuggestions) {
-                      setState(() {
-                        _showSuggestions = false;
-                      });
-                      _searchFocusNode.unfocus();
-                    }
-                  },
-                  child: Consumer<MovieProvider>(
-                    builder: (context, movieProvider, child) {
-                      if (movieProvider.isInitialLoading) {
-                        return const Center(
-                          child: CircularProgressIndicator(
-                            color: Color(0xFFFFD700),
-                          ),
-                        );
+          child: SafeArea(
+            child: Column(
+              children: [
+                // App Bar
+                _buildAppBar(),
+                
+                // Main Content
+                Expanded(
+                  child: GestureDetector(
+                    onTap: () {
+                      // Hide suggestions when tapping outside
+                      if (_showSuggestions) {
+                        setState(() {
+                          _showSuggestions = false;
+                        });
+                        _searchFocusNode.unfocus();
                       }
-
-                      if (movieProvider.error != null && 
-                          movieProvider.topRatedMovies.isEmpty && 
-                          movieProvider.filteredMovies.isEmpty) {
-                        return CustomErrorWidget(
-                          error: movieProvider.error!,
-                          onRetry: () => movieProvider.refresh(),
-                        );
-                      }
-
-                      return RefreshIndicator(
-                        onRefresh: () => movieProvider.refresh(),
-                        color: const Color(0xFFFFD700),
-                        backgroundColor: const Color(0xFF2C2C2C),
-                        child: SingleChildScrollView(
-                          physics: const AlwaysScrollableScrollPhysics(),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              // Search Bar Section
-                              _buildSearchBar(movieProvider),
-                              const SizedBox(height: 24),
-                              
-                              // Top Rated Movies Section
-                              _buildTopRatedSection(movieProvider),
-                              const SizedBox(height: 10),
-                              
-                              // Genre Categories Section
-                              _buildGenreCategoriesSection(movieProvider),
-                              const SizedBox(height: 16),
-                              
-                              // Year Filter Section
-                              _buildYearFilterSection(movieProvider),
-                              const SizedBox(height: 24),
-                              
-                              // Movies by Selected Genre (with search results)
-                              _buildMoviesByGenreSection(movieProvider),
-                              const SizedBox(height: 32),
-                            ],
-                          ),
-                        ),
-                      );
                     },
+                    child: Consumer<MovieProvider>(
+                      builder: (context, movieProvider, child) {
+                        if (movieProvider.isInitialLoading) {
+                          return const Center(
+                            child: CircularProgressIndicator(
+                              color: Color(0xFFFFD700),
+                            ),
+                          );
+                        }
+      
+                        if (movieProvider.error != null && 
+                            movieProvider.topRatedMovies.isEmpty && 
+                            movieProvider.filteredMovies.isEmpty) {
+                          return CustomErrorWidget(
+                            error: movieProvider.error!,
+                            onRetry: () => movieProvider.refresh(),
+                          );
+                        }
+      
+                        return RefreshIndicator(
+                          onRefresh: () => movieProvider.refresh(),
+                          color: const Color(0xFFFFD700),
+                          backgroundColor: const Color(0xFF2C2C2C),
+                          child: SingleChildScrollView(
+                            physics: const AlwaysScrollableScrollPhysics(),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                // Search Bar Section
+                                _buildSearchBar(movieProvider),
+                                const SizedBox(height: 24),
+                                
+                                // Top Rated Movies Section
+                                _buildTopRatedSection(movieProvider),
+                                const SizedBox(height: 10),
+                                
+                                // Genre Categories Section
+                                _buildGenreCategoriesSection(movieProvider),
+                                const SizedBox(height: 16),
+                                
+                                // Year Filter Section
+                                _buildYearFilterSection(movieProvider),
+                                const SizedBox(height: 24),
+                                
+                                // Movies by Selected Genre (with search results)
+                                _buildMoviesByGenreSection(movieProvider),
+                                const SizedBox(height: 32),
+                              ],
+                            ),
+                          ),
+                        );
+                      },
+                    ),
                   ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         ),
       ),
