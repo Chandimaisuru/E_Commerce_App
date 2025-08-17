@@ -34,4 +34,20 @@ class Movie {
 
   String get fullPosterPath => 'https://image.tmdb.org/t/p/w500$posterPath';
   String get fullBackdropPath => 'https://image.tmdb.org/t/p/w500$backdropPath';
+  
+  // Extract year from release date
+  String get releaseYear {
+    if (releaseDate.isEmpty) return '';
+    try {
+      return releaseDate.split('-')[0];
+    } catch (e) {
+      return '';
+    }
+  }
+  
+  // Get title with year
+  String get titleWithYear {
+    if (releaseYear.isEmpty) return title;
+    return '$title ($releaseYear)';
+  }
 }
